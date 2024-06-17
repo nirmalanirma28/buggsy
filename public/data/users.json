@@ -1,0 +1,32 @@
+[
+    {
+        "userId": 1,
+        "fullName": "Alex Johnson",
+        "email": "alex.johnson@example.com",
+        "password": "password123"
+    },
+    {
+        "userId": 2,
+        "fullName": "Bella Smith",
+        "email": "bella.smith@example.com",
+        "password": "mypassword"
+    },
+    {
+        "userId": 3,
+        "fullName": "Charlie Davis",
+        "email": "charlie.davis@example.com",
+        "password": "charlie123"
+    },
+    {
+        "userId": 4,
+        "fullName": "Dana Lee",
+        "email": "dana.lee@example.com",
+        "password": "dana2023"
+    },
+    {
+        "userId": 5,
+        "fullName": "Evan Wright",
+        "email": "evan.wright@example.com",
+        "password": "wright1234"
+    }
+]

@@ -7,6 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width:{
+        "login-box-width": "697px",
+        "login-box-width-sm": "350px" 
+      },
+      height:{
+        "login-box-height": "373px",
+        "login-box-height-sm": "329px"
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
