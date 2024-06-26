@@ -1,0 +1,19 @@
+export default function ArrowDown() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7.99998 3.33331V12.6666M7.99998 12.6666L12.6666 7.99998M7.99998 12.6666L3.33331 7.99998"
+        stroke="#667085"
+        stroke-width="1.33333"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
