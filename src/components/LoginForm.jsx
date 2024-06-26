@@ -20,7 +20,7 @@ const LoginForm = () => {
     );
 
     if (user) {
-      router.push("/dashboard");
+      router.push("/Tickets");
     } else {
       setError("Incorrect email or password");
     }
