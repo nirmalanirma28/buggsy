@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ArrowDown from "../../../public/icons/ArrowDown";
 import ArrowUp from "../../../public/icons/ArrowUp";
 import SearchTicket from "@/components/SearchTicket";
+import FilterTicket from "@/components/FilterTicket";
 
 export default function Tickets() {
   const [tickets, setTickets] = useState([]);
@@ -14,31 +15,43 @@ export default function Tickets() {
     key: "ticketID",
     direction: "asc",
   });
-
-  const [TicketInput, setTicketInput] = useState("");
+  const [ticketInput, setTicketInput] = useState("");
+  const [filters, setFilters] = useState({ severity: [], status: [] });
 
   const fetchTickets = async () => {
     const data = await fetch("/data/tickets.json");
     const ticketData = await data.json();
     setTickets(ticketData);
+    setFilteredTickets(ticketData);
   };
-
-  // useEffect(() => {
-  //   fetchTickets();
-  // }, []);
 
   useEffect(() => {
     fetchTickets();
-    if (TicketInput) {
-      setFilteredTickets(
-        tickets.filter((ticket) =>
-          ticket.subject.toLowerCase().includes(TicketInput.toLowerCase())
-        )
+  }, []);
+
+  useEffect(() => {
+    let filtered = tickets;
+
+    if (ticketInput) {
+      filtered = filtered.filter((ticket) =>
+        ticket.subject.toLowerCase().includes(ticketInput.toLowerCase())
       );
-    } else {
-      setFilteredTickets(tickets);
     }
-  }, [TicketInput, tickets]);
+
+    if (filters.severity.length > 0) {
+      filtered = filtered.filter((ticket) =>
+        filters.severity.includes(ticket.priority.toLowerCase())
+      );
+    }
+
+    if (filters.status.length > 0) {
+      filtered = filtered.filter((ticket) =>
+        filters.status.includes(ticket.status.toLowerCase())
+      );
+    }
+
+    setFilteredTickets(filtered);
+  }, [ticketInput, filters, tickets]);
 
   const sortedTickets = [...filteredTickets].sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -56,8 +69,6 @@ export default function Tickets() {
     indexOfFirstTicket,
     indexOfLastTicket
   );
-
-  // Handle pagination
   const totalPages = Math.ceil(filteredTickets.length / ticketsPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -86,92 +97,91 @@ export default function Tickets() {
 
   return (
     <div className="min-h-screen mx-40 p-4">
-      <div>
+      <div className="flex justify-between">
         <SearchTicket onSelectTicket={handleTicketSelect} />
+        <FilterTicket onSelectFilters={setFilters} />
       </div>
-      <div className="container ">
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
-            <tr className="text-slate-500 bg-slate-100">
-              <th
-                className="py-2 px-4 border border-gray-300 text-center cursor-pointer"
-                onClick={() => requestSort("ticketID")}
-              >
-                <div className="flex gap-2 items-center">
-                  <p>Ticket ID</p>
-                  {sortConfig.key === "ticketID" &&
-                    (sortConfig.direction === "asc" ? (
-                      <ArrowDown />
-                    ) : (
-                      <ArrowUp />
-                    ))}
-                </div>
-              </th>
-              <th className="py-2 px-4 border border-gray-300 text-center">
-                Date Opened
-              </th>
-              <th className="py-2 px-4 border border-gray-300 text-center">
-                Subject
-              </th>
-              <th className="py-2 px-4 border border-gray-300 text-center">
-                Severity
-              </th>
-              <th className="py-2 px-4 border border-gray-300 text-center">
-                Assignee
-              </th>
-              <th className="py-2 px-4 border border-gray-300 text-center">
-                Customer
-              </th>
-              <th className="py-2 px-4 border border-gray-300 text-center">
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentTickets.map((ticket) => (
-              <tr key={ticket.ticketID} className="text-slate-500">
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  {ticket.ticketID}
-                </td>
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  {ticket.dateOpened}
-                </td>
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  {ticket.subject}
-                </td>
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  <span className={getSeverityClass(ticket.priority)}>
-                    {ticket.priority}
-                  </span>
-                </td>
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  {ticket.assignee}
-                </td>
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  {ticket.customer.name}
-                </td>
-                <td className="py-2 px-4 border border-gray-300 text-center">
-                  {ticket.status}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-center mt-4">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => paginate(index + 1)}
-              className={`mx-1 px-3 py-1 border rounded ${
-                currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-blue-500"
-              }`}
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr className="text-slate-500 bg-slate-100">
+            <th
+              className="py-2 px-4 border border-gray-300 text-center cursor-pointer"
+              onClick={() => requestSort("ticketID")}
             >
-              {index + 1}
-            </button>
+              <div className="flex gap-2 items-center">
+                <p>Ticket ID</p>
+                {sortConfig.key === "ticketID" &&
+                  (sortConfig.direction === "asc" ? (
+                    <ArrowDown />
+                  ) : (
+                    <ArrowUp />
+                  ))}
+              </div>
+            </th>
+            <th className="py-2 px-4 border border-gray-300 text-center">
+              Date Opened
+            </th>
+            <th className="py-2 px-4 border border-gray-300 text-center">
+              Subject
+            </th>
+            <th className="py-2 px-4 border border-gray-300 text-center">
+              Severity
+            </th>
+            <th className="py-2 px-4 border border-gray-300 text-center">
+              Assignee
+            </th>
+            <th className="py-2 px-4 border border-gray-300 text-center">
+              Customer
+            </th>
+            <th className="py-2 px-4 border border-gray-300 text-center">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentTickets.map((ticket) => (
+            <tr key={ticket.ticketID} className="text-slate-500">
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                {ticket.ticketID}
+              </td>
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                {ticket.dateOpened}
+              </td>
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                {ticket.subject}
+              </td>
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                <span className={getSeverityClass(ticket.priority)}>
+                  {ticket.priority}
+                </span>
+              </td>
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                {ticket.assignee}
+              </td>
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                {ticket.customer.name}
+              </td>
+              <td className="py-2 px-4 border border-gray-300 text-center">
+                {ticket.status}
+              </td>
+            </tr>
           ))}
-        </div>
+        </tbody>
+      </table>
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 px-3 py-1 border rounded ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-white text-blue-500"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
