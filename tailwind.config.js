@@ -13,6 +13,8 @@ module.exports = {
       },
       height:{
         "login-box-height": "373px",
+        "signup-box-height": "520px",
+        "signup-box-height-sm": "485px",
         "login-box-height-sm": "329px"
       },
       backgroundImage: {
