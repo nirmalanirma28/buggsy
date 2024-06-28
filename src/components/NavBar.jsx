@@ -27,7 +27,7 @@ const NavBar = () => {
           className="md:w-24 md:h-24 "
         />
       </div>
-      <div className="hidden md:flex flex-grow justify-between">
+      <div className="hidden md:flex">
         <ul className="flex justify-between gap-x-16">
           <li className="hover:text-black hover:font-bold">
             <Link href="/">Tickets</Link>
@@ -35,14 +35,11 @@ const NavBar = () => {
           <li className="hover:text-black hover:font-bold">
             <Link href="/">New Ticket</Link>
           </li>
-          <li className="hover:text-black hover:font-bold">
-            <Link href="/">Reports</Link>
-          </li>
         </ul>
       </div>
       <div className="hidden md:block">
-        <Link href="/" className="hover:text-black hover:font-bold">
-          Login
+        <Link href="/SignUp" className="hover:text-black hover:font-bold">
+          Sign up
         </Link>
       </div>
       <div className="md:hidden">
@@ -81,19 +78,6 @@ const NavBar = () => {
                 className="hover:underline"
               >
                 New Ticket
-              </Link>
-            </li>
-            <li
-              className={`py-2 ${
-                isActive("/Reports") ? "text-black font-bold" : ""
-              }`}
-            >
-              <Link
-                href="/Reports"
-                onClick={() => setMenuOpen(false)}
-                className="hover:underline"
-              >
-                Reports
               </Link>
             </li>
             <li className="py-2">
