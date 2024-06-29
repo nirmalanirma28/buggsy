@@ -30,10 +30,10 @@ const NavBar = () => {
       <div className="hidden md:flex">
         <ul className="flex justify-between gap-x-16">
           <li className="hover:text-black hover:font-bold">
-            <Link href="/">Tickets</Link>
+            <Link href="/Tickets">Tickets</Link>
           </li>
           <li className="hover:text-black hover:font-bold">
-            <Link href="/">New Ticket</Link>
+            <Link href="/NewTicket">New Ticket</Link>
           </li>
         </ul>
       </div>
