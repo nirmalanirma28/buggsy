@@ -1,11 +1,13 @@
-import LoginForm from "@/components/LoginForm";
+"use client"
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  return (
-    // <div className="min-h-screen flex flex-col">
-      <main className="flex-grow flex items-center justify-center">
-        <LoginForm/>
-      </main>
-  // </div>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/Login');
+  }, [router]);
+
+  return null;
 }

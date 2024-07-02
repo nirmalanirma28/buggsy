@@ -31,14 +31,17 @@ const NewTicketForm = () => {
           status,
         }),
       });
-
       if (!res.ok) {
         throw new Error(`Error: ${res.status}`);
       }
 
       const data = await res.json();
-      console.log("Ticket created successfully!", data);
       setMessage("Ticket created successfully!");
+      setPriority("high");
+      setSubject("");
+      setAssignee("");
+      setCustomer("");
+      setStatus("new");
     } catch (error) {
       console.error("Error:", error);
       setMessage("Failed to create ticket.");

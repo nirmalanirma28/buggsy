@@ -3,28 +3,33 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import ExclamationTriangle from "../../public/icons/ExclamationTriangle";
+import { useAuth } from "../context/AuthContext";
 
 const LoginForm = () => {
   const router = useRouter();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const data = await fetch("/data/users.json");
-    const users = await data.json();
 
-    const user = users.find(
-      (user) => user.email === email && user.password === password
-    );
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-    if (user) {
+    if (res.ok) {
+      const { token } = await res.json();
+      login(token); // Store the token or local storage
       router.push("/Tickets");
     } else {
       setError("Incorrect email or password");
     }
-    console.log(error);
   };
 
   return (
