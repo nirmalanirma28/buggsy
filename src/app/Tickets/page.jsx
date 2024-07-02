@@ -5,8 +5,9 @@ import ArrowDown from "../../../public/icons/ArrowDown";
 import ArrowUp from "../../../public/icons/ArrowUp";
 import SearchTicket from "@/components/SearchTicket";
 import FilterTicket from "@/components/FilterTicket";
+import withAuth from "@/components/withAuth";
 
-export default function Tickets() {
+const Tickets = () => {
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -185,4 +186,6 @@ export default function Tickets() {
       </div>
     </div>
   );
-}
+};
+
+export default withAuth(Tickets);
