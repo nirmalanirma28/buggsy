@@ -9,10 +9,8 @@ const withAuth = (WrappedComponent) => {
     const router = useRouter();
 
     useEffect(() => {
-      if (!loading) {
-        if (!isAuthenticated) {
-          router.push("/");
-        }
+      if (!loading && !isAuthenticated) {
+        router.push("/Login");
       }
     }, [isAuthenticated, loading, router]);
 

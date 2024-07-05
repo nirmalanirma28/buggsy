@@ -160,7 +160,7 @@ const Tickets = () => {
                 {ticket.assignee}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
-                {ticket.customer.name}
+                {ticket.customer}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
                 {ticket.status}
