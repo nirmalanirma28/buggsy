@@ -52,7 +52,16 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="hidden md:block">
-        {isAuthenticated ? (
+        {pathName === "/Login" || pathName === "/" ? (
+          <Link
+            href="/SignUp"
+            className={`hover:text-black hover:font-bold ${
+              isActive("/SignUp") ? "text-black font-bold" : ""
+            }`}
+          >
+            Sign Up
+          </Link>
+        ) : isAuthenticated ? (
           <button
             onClick={handleLogout}
             className="hover:text-black hover:font-bold"
@@ -63,7 +72,7 @@ const NavBar = () => {
           <Link
             href="/Login"
             className={`hover:text-black hover:font-bold ${
-              isActive("/Login") ? "text-black font-bold" : ""
+              isActive("/login") ? "text-black font-bold" : ""
             }`}
           >
             Login
