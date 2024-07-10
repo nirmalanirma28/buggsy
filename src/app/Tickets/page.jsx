@@ -52,6 +52,7 @@ const Tickets = () => {
     }
 
     setFilteredTickets(filtered);
+    setCurrentPage(1);
   }, [ticketInput, filters, tickets]);
 
   const sortedTickets = [...filteredTickets].sort((a, b) => {
@@ -119,7 +120,7 @@ const Tickets = () => {
                   ))}
               </div>
             </th>
-            <th className="py-2 px-4 border border-gray-300 text-center">
+            <th className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
               Date Opened
             </th>
             <th className="py-2 px-4 border border-gray-300 text-center">
@@ -128,13 +129,13 @@ const Tickets = () => {
             <th className="py-2 px-4 border border-gray-300 text-center">
               Severity
             </th>
-            <th className="py-2 px-4 border border-gray-300 text-center">
+            <th className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
               Assignee
             </th>
-            <th className="py-2 px-4 border border-gray-300 text-center">
+            <th className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
               Customer
             </th>
-            <th className="py-2 px-4 border border-gray-300 text-center">
+            <th className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
               Status
             </th>
           </tr>
@@ -145,7 +146,7 @@ const Tickets = () => {
               <td className="py-2 px-4 border border-gray-300 text-center">
                 {ticket.ticketID}
               </td>
-              <td className="py-2 px-4 border border-gray-300 text-center">
+              <td className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
                 {ticket.dateOpened}
               </td>
               <td className="py-2 px-4 border border-gray-300 text-center">
@@ -156,13 +157,13 @@ const Tickets = () => {
                   {ticket.priority}
                 </span>
               </td>
-              <td className="py-2 px-4 border border-gray-300 text-center">
+              <td className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
                 {ticket.assignee}
               </td>
-              <td className="py-2 px-4 border border-gray-300 text-center">
+              <td className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
                 {ticket.customer}
               </td>
-              <td className="py-2 px-4 border border-gray-300 text-center">
+              <td className="py-2 px-4 border border-gray-300 text-center hidden md:table-cell">
                 {ticket.status}
               </td>
             </tr>
